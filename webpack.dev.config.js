@@ -5,10 +5,10 @@ module.exports = {
   watch: true,
   mode: 'development',
   devtool: 'eval-cheap-source-map',
-  entry: "./src/leaflet.myplugin.js",
+  entry: "./src/leaflet.AreaRuler.js",
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'leaflet.myplugin.min.js',
+    filename: 'leaflet.AreaRuler.min.js',
     clean: true,
   },
   experiments: {
@@ -17,6 +17,7 @@ module.exports = {
   externalsType: 'window',
   externals: {
     leaflet: 'L',
+    'leaflet-draw': 'L.Draw',
   },
   module: {
     rules: [
@@ -41,6 +42,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: 'leaflet.myplugin.css' }),
+    new MiniCssExtractPlugin({ filename: 'leaflet.AreaRuler.css' }),
   ],
 };

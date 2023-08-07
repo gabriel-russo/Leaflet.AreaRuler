@@ -2,11 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DEV - Leaflet.myplugin</title>
+    <title>DEV - Leaflet.AreaRuler</title>
+    <!-- Dependencies CSS -->
     <link rel="stylesheet" href="./node_modules/leaflet/dist/leaflet.css"/>
-    <link rel="stylesheet" href="dist/leaflet.myplugin.css">
+    <link rel="stylesheet" href="dist/leaflet.AreaRuler.css">
+    <link rel="stylesheet" href="node_modules/leaflet-draw/dist/leaflet.draw-src.css"/>
+
+    <!-- Dependencies JS -->
     <script type="text/javascript" src="./node_modules/leaflet/dist/leaflet-src.js"></script>
-    <script type="text/javascript" src="dist/leaflet.myplugin.min.js"></script>
+    <script src="node_modules/leaflet-draw/dist/leaflet.draw-src.js"></script>
+    <script type="text/javascript" src="dist/leaflet.AreaRuler.min.js"></script>
 </head>
 
 <body>
@@ -21,6 +26,8 @@
   const map = L.map('map')
     .setView([-23.70078702319699, -46.69719607766831], 16)
     .addLayer(osm);
+
+  L.Control.arearuler().addTo(map);
 </script>
 
 </html>

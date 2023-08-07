@@ -1,11 +1,11 @@
 {
-  "name": "leaflet-myplugin",
+  "name": "leaflet-arearuler",
   "version": "0.0.1",
-  "description": "<template-description>",
+  "description": "A simple tool to measure área on map",
   "files": [
     "dist"
   ],
-  "main": "dist/leaflet.myplugin.js",
+  "main": "dist/leaflet.AreaRuler.js",
   "scripts": {
     "dev": "webpack --config=webpack.dev.config.js",
     "build": "webpack --config=webpack.config.js",
@@ -13,17 +13,33 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+<template-github>.git"
+    "url": "git+https://github.com/gabriel-russo/Leaflet.AreaRuler.git"
   },
   "keywords": [
-    "Lorem",
-    "Ipsum",
-    "Dolor"
+    "leaflet",
+    "measure",
+    "area",
+    "arearuler",
+    "leaflet plugin",
+    "ruler"
   ],
-  "author": "<template-author>",
+  "author": "Gabriel Russo",
   "license": "MIT",
   "bugs": {
-    "url": "<template-github>/issues"
+    "url": "https://github.com/gabriel-russo/Leaflet.AreaRuler/issues"
   },
-  "homepage": "<template-github>#readme"
+  "homepage": "https://github.com/gabriel-russo/Leaflet.AreaRuler#readme",
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "eslint": "^8.46.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.28.0",
+    "mini-css-extract-plugin": "^2.7.6",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "leaflet-draw": "^1.0.4"
+  }
 }
