@@ -1,11 +1,11 @@
 {
   "name": "leaflet-arearuler",
   "version": "0.0.1",
-  "description": "A simple tool to measure área on map",
+  "description": "A simple tool to measure area on map",
   "files": [
     "dist"
   ],
-  "main": "dist/leaflet-arearuler.js",
+  "main": "dist/leaflet-arearuler.min.js",
   "scripts": {
     "dev": "webpack --config=webpack.dev.config.js",
     "build": "webpack --config=webpack.config.js",

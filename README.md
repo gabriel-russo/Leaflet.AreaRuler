@@ -1,50 +1,123 @@
-# Leaflet Modern Plugin Template
+# Leaflet.AreaRuler
 
-![Leaflet Logo](https://leafletjs.com/docs/images/logo.png)
+A simple tool to measure area on map.
 
-This repository is a GitHub template that serves as a base for creating modern plugins for Leaflet using Webpack and
-ES5+. It provides all the necessary structure to develop and build custom plugins for the Leaflet mapping library.
+Requires [Leaflet](https://github.com/Leaflet/Leaflet/releases) 1.0.0+ branches
 
-## What is Leaflet?
+Requires [Leaflet.Draw](https://github.com/leaflet/Leaflet.Draw#readme)
 
-Leaflet is an open-source JavaScript library widely used to create interactive maps on web pages. It is lightweight,
-fast, and highly customizable, making it a popular choice for mapping projects.
+## Install
 
-Official website: [Leaflet](https://leafletjs.com/)
-
-## Requirements
-
-Before getting started, make sure you have [Node.js](https://nodejs.org/) installed on your system.
-
-## Getting Started
-
-1. **Use this template**: Click on the "Use this template" button at the top of the page:
-
-![](https://docs.github.com/assets/cb-77734/mw-1440/images/help/repository/use-this-template-button.webp)
-
-2. **Use install script**: This script will setup the project for you
-
-```bash
-./start.sh
+```shell
+npm install leaflet-arearuler
 ```
 
-3. **Development**: Now you can start developing your custom plugin. The source files are located in the `src` folder,
-   and you can edit the main file: `src/leaflet.<your plugin name>.js`.
+## Demo
 
+Check out the [demo](https://gabriel-russo.github.io/Leaflet.AreaRuler/example/)
 
-4. **Start the webpack Watcher**: This will automatically rebuild your plugin when you make changes to the source files
+![Example](docs/images/example_screenshot.png)
 
-```bash
-npm run dev
+## Usage
+
+As map option:
+
+```js
+const map = L.map('map', { areaRulerControl: true });
 ```
 
-Open the `index.html` in your browser
+Or like any control:
 
-## Contribution
+```js
+const options = {}; // See docs to see options
+L.Control.arearuler(options)
+  .addTo(map);
+```
 
-If you encounter any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
-We welcome contributions!
+## Docs
 
-## License
+### Options:
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```js
+// Default plugin options object, change wathever you want
+options = {
+  position: 'topleft',
+  unity: 'ha', // m, ha, alq, km
+  shapeOptions: {
+    color: "#d07f03",
+    stroke: true,
+    weight: 4,
+    opacity: 0.7,
+    fill: true,
+  },
+  icon: new L.DivIcon({
+    iconSize: new L.Point(9, 9),
+    className: 'leaflet-div-icon leaflet-editing-icon',
+  }),
+  text: {
+    title: 'Measure area',
+  },
+};
+```
+
+### Methods
+
+| Method Name | Description                                       |
+|-------------|---------------------------------------------------|
+| enabled     | Gets a true/false of whether the ruler is enabled |
+| setOptions  | Update options after instantiate                  |
+| toggle      | Toggles the ruler on or off                       |
+
+### Events:
+
+* `arearuler:measurestart` - Event fired when the measure handler are added to map
+* `arearuler:newarea` - Event fired when a new segment/vertex is added
+  ```js
+  // Event data example: unity = ha
+  {
+    converted: {
+      area: 11.48,
+      unity: "ha"
+    },
+    original: {
+      area: 114848.85315528093,
+      unity: "m"
+    },
+    type: "arearuler:newarea",
+  // target ...,
+  // sourceTarget...,
+  }
+  ```
+* `arearuler:newmeasure` - Event fired when the user starts a new measure
+* `arearuler:measurestop` - Event fired when the measure handler are removed from map
+
+### Custom html button
+
+If you are developing a web application and you want to use your own html button outside the map container, you can use
+the following code:
+
+```javascript
+const options = {
+  button: document.getElementById('my-button'), // Your html button HTML reference
+}
+
+const control = L.Control.arearuler(options)
+  .addTo(map);
+```
+
+After that, you have to make your own segments output box using the events described above.
+
+You can see the example [here](https://gabriel-russo.github.io/Leaflet.AreaRuler/example/with-button.html)
+
+## Development
+
+```shell
+npm install --save-dev     # install dependencies
+npm run dev  # Compile and save at dist/ after any change
+```
+
+Open `index.html` in your browser and start editing.
+
+## Authors
+
+* Gabriel Russo

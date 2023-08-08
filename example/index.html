@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaflet.AreaRuler</title>
+    <!-- LEAFLET SOURCE    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+          integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+            integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Dependency to Leaflet Draw -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"
+          integrity="sha512-gc3xjCmIy673V6MyOAZhIW93xhM9ei1I+gLbmFjUHIjocENRsLX/QUE1htk5q1XV2D/iie/VQ8DXI6Vu8bexvQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"
+            integrity="sha512-ozq8xQKq6urvuU6jNgkfqAmT7jKN2XumbrX1JiB3TnF7tI48DPI4Gy1GXKD/V3EExgAs1V+pRO7vwtS1LHg0Gw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Leaflet QgsMeasure -->
+    <script type="application/javascript"
+            src="https://unpkg.com/leaflet-arearuler@0.0.1/dist/leaflet-arearuler.min.js"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-arearuler@0.0.1/dist/leaflet-arearuler.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<style>
+    html {
+        font-family: Helvetica, sans-serif;
+    }
+
+    .plugin-title {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        margin: 10px;
+    }
+
+    .plugin-title span {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-right: 35px;
+    }
+
+    .plugin-title a {
+        text-align: center;
+        align-self: center;
+        text-decoration: none;
+    }
+</style>
+
+<body>
+<div class="plugin-title">
+    <span>Leaflet.AreaRuler</span>
+    <a href="https://github.com/gabriel-russo/Leaflet.AreaRuler">github.com/gabriel-russo/Leaflet.AreaRuler</a>
+</div>
+<div id="map" style="width: 98vw; height: 85vh"></div>
+<div><a href="with-button.html">Example with custom html button</a></div>
+</body>
+
+<script type="text/javascript">
+  const wi = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+  });
+
+  const map = L.map('map')
+    .setView([-11.67980732127354, -45.72372436523438], 12)
+    .addLayer(wi);
+
+  L.Control.arearuler()
+    .addTo(map);
+</script>
+
+</html>

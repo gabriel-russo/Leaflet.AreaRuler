@@ -120,7 +120,7 @@ L.Polygon.Measure = L.Draw.Polygon.extend({
         unity: 'm',
       },
       converted: {
-        area: L.GeometryUtil.Custom.readableArea(this._area, this.options.unity, {}),
+        area: parseFloat(L.GeometryUtil.Custom.readableArea(this._area, this.options.unity, {})),
         unity: this.options.label[this.options.unity],
       },
     });

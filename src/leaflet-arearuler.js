@@ -6,7 +6,7 @@ import "./leaflet-arearuler.css";
 L.Control.AreaRuler = L.Control.extend({
   options: {
     position: 'topleft',
-    unity: 'm',
+    unity: 'ha',
     shapeOptions: {
       color: "#d07f03",
       stroke: true,
@@ -36,6 +36,12 @@ L.Control.AreaRuler = L.Control.extend({
     L.Util.setOptions(this, options);
   },
 
+  onRemove() {
+    if (this.options.button) {
+      L.DomEvent.off(this.options.button, 'click', this.toggle, this);
+    }
+  },
+
   enabled() {
     return this._handler.enabled();
   },
@@ -55,12 +61,17 @@ L.Control.AreaRuler = L.Control.extend({
   },
 
   onAdd(map) {
+    this._handler = new L.Polygon.Measure(map, this.options);
+
+    if (this.options.button) {
+      L.DomEvent.on(this.options.button, "click", this.toggle, this);
+      return L.DomUtil.create('div', 'leaflet-bar'); // Leaflet needs a DOM element returned
+    }
+
     let link = null;
     let className = 'leaflet-control-draw';
 
     this._container = L.DomUtil.create('div', 'leaflet-bar');
-
-    this._handler = new L.Polygon.Measure(map, this.options);
 
     this._handler.on('enabled', () => {
       L.DomUtil.addClass(this._container, 'enabled');
@@ -81,6 +92,7 @@ L.Control.AreaRuler = L.Control.extend({
 
     return this._container;
   },
+
 });
 
 L.Map.mergeOptions({

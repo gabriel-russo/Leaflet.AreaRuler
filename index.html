@@ -19,15 +19,16 @@
 </body>
 
 <script type="text/javascript">
-  const osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; 2013 OpenStreetMap contributors',
+  const osm = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
   });
 
   const map = L.map('map')
-    .setView([-23.70078702319699, -46.69719607766831], 16)
+    .setView([-11.67980732127354, -45.72372436523438], 12)
     .addLayer(osm);
 
-  L.Control.arearuler().addTo(map);
+  L.Control.arearuler()
+    .addTo(map);
 </script>
 
 </html>
