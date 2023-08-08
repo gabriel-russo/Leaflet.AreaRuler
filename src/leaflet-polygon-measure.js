@@ -1,8 +1,18 @@
 import L from "leaflet";
+import "./leaflet-geometry-util";
 
 L.Polygon.Measure = L.Draw.Polygon.extend({
   addHooks() {
     L.Draw.Polygon.prototype.addHooks.call(this);
+
+    const label = {
+      m: 'm²',
+      ha: 'ha',
+      alq: 'alq (SP)',
+      km: 'km²',
+    }; // TODO: Add (mi, ac, yd)
+
+    L.Util.setOptions(this, { label });
 
     if (this._map) {
       this._markerGroup = new L.LayerGroup();
@@ -27,6 +37,7 @@ L.Polygon.Measure = L.Draw.Polygon.extend({
       .off("click", this._onClick, this);
 
     this._clearGuides();
+
     this._container.style.cursor = '';
 
     this._removeShape();
@@ -59,6 +70,10 @@ L.Polygon.Measure = L.Draw.Polygon.extend({
     let polygon = new this.Poly(this._poly.getLatLngs(), this.options.shapeOptions);
 
     this._lastMeasure.addLayer(polygon);
+
+    polygon.bindPopup(`<p>${L.GeometryUtil.Custom.readableArea(this._area, this.options.unity, {})} ${this.options.label[this.options.unity]}</p>`)
+      .openPopup();
+
     this._drawing = false;
     this._cleanUpShape();
     this._clearGuides();
@@ -82,17 +97,57 @@ L.Polygon.Measure = L.Draw.Polygon.extend({
     if (!this._drawing) {
       this._removeShape();
       this._startShape();
+      this._map.fire("arearuler:newmeasure");
     }
   },
 
-  _getTooltipText() {
-    let labelText = L.Draw.Polygon.prototype._getTooltipText.call(this);
+  _vertexChanged(latlng, added) {
+    this._area = L.GeometryUtil.geodesicArea(this._poly.getLatLngs());
 
-    if (!this._drawing) {
-      labelText.text = '';
+    this._map.fire("arearuler:newarea", {
+      original: {
+        area: this._area,
+        unity: 'm',
+      },
+      converted: {
+        area: L.GeometryUtil.Custom.readableArea(this._area, this.options.unity, {}),
+        unity: this.options.label[this.options.unity],
+      },
+    });
+
+    this._updateFinishHandler();
+
+    this._updateRunningMeasure(latlng, added);
+
+    this._clearGuides();
+
+    this._updateTooltip();
+  },
+
+  _getTooltipText() {
+    let text;
+    let subtext;
+
+    if (this._markers.length > 2) {
+      subtext = `<br> ${L.GeometryUtil.Custom.readableArea(this._area, this.options.unity, {})} ${this.options.label[this.options.unity]}`;
     }
 
-    return labelText;
+    if (this._markers.length === 0) {
+      text = L.drawLocal.draw.handlers.polygon.tooltip.start;
+    } else if (this._markers.length < 3) {
+      text = L.drawLocal.draw.handlers.polygon.tooltip.cont;
+    } else {
+      text = L.drawLocal.draw.handlers.polygon.tooltip.end;
+    }
+
+    if (!this._drawing) {
+      text = '';
+    }
+
+    return {
+      text,
+      subtext,
+    };
   },
 
 });

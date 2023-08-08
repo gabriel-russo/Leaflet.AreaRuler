@@ -4,10 +4,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   watch: false,
   mode: "production",
-  entry: "./src/leaflet.AreaRuler.js",
+  entry: "./src/leaflet-arearuler.js",
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'leaflet.AreaRuler.min.js',
+    filename: 'leaflet-arearuler.min.js',
     clean: true,
   },
   experiments: {
@@ -41,6 +41,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: 'leaflet.AreaRuler.css' }),
+    new MiniCssExtractPlugin({ filename: 'leaflet-arearuler.css' }),
   ],
 };

@@ -5,7 +5,7 @@
   "files": [
     "dist"
   ],
-  "main": "dist/leaflet.AreaRuler.js",
+  "main": "dist/leaflet-arearuler.js",
   "scripts": {
     "dev": "webpack --config=webpack.dev.config.js",
     "build": "webpack --config=webpack.config.js",
