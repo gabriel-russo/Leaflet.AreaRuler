@@ -8,7 +8,7 @@ L.Polygon.Measure = L.Draw.Polygon.extend({
     const label = {
       m: 'm²',
       ha: 'ha',
-      alq: 'alq (SP)',
+      alq: 'Alqueire paulista',
       km: 'km²',
     }; // TODO: Add (mi, ac, yd)
 
@@ -43,6 +43,10 @@ L.Polygon.Measure = L.Draw.Polygon.extend({
     this._removeShape();
   },
 
+  setOptions(options) {
+    this.options = L.Util.extend(this.options, options);
+  },
+
   _startShape() {
     this._drawing = true;
 
@@ -55,6 +59,10 @@ L.Polygon.Measure = L.Draw.Polygon.extend({
 
     this._map.on('pointermove', this._onMouseMove, this)
       .on('mousemove', this._onMouseMove, this);
+  },
+
+  // Disable Line Guides.
+  _updateGuide() {
   },
 
   _finishShape() {
@@ -74,13 +82,15 @@ L.Polygon.Measure = L.Draw.Polygon.extend({
     polygon.bindPopup(`<p>${L.GeometryUtil.Custom.readableArea(this._area, this.options.unity, {})} ${this.options.label[this.options.unity]}</p>`)
       .openPopup();
 
+    this._map
+      .off('pointermove', this._onMouseMove, this)
+      .off('mousemove', this._onMouseMove, this);
+
     this._drawing = false;
     this._cleanUpShape();
     this._clearGuides();
     this._updateTooltip();
-    this._map
-      .off('pointermove', this._onMouseMove, this)
-      .off('mousemove', this._onMouseMove, this);
+
     this._container.style.cursor = '';
   },
 

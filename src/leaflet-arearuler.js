@@ -50,6 +50,10 @@ L.Control.AreaRuler = L.Control.extend({
     }
   },
 
+  setOptions(options) {
+    this._handler.setOptions(options);
+  },
+
   onAdd(map) {
     let link = null;
     let className = 'leaflet-control-draw';
